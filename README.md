@@ -26,3 +26,13 @@ Not a whole lot of information is going to be on here, so go to the [main repo](
 - FULLSCREEN_PATCH
 - TOGGLEFULLSCREEN_PATCH
 - VANITYGAPS_PATCH
+
+## Modifying
+
+To modify this, I highly recommend reading the [https://github.com/bakkeby/dwm-flexipatch#readme](flexipatch README).
+
+### Things to Know Before Editing
+
+- I did manually edit `patches/autostart.c` to ignore all config variables, and just look in `~/.dwm/` for the autostart script.
+- I edited the `config.def.h` which means you should run `make` and then edit the `config.h`
+- I added a test script called `test.sh`. All it does is open a `Xephyr` window and then runs dwm in it. **Keep in mind, there might be some problems when running two window managers at once. For example, if you were to try running two instances of picom, it wouldn't work.** 
