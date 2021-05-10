@@ -6,7 +6,7 @@ This is my configuration of [dwm-flexipatch](https://github.com/bakkeby/dwm-flex
 
 An autostart script should be placed at `~/.dwm/autostart.sh`
 
-Not a whole lot of information is going to be on here, so go to the [main repo](https://github.com/bakkeby/dwm-flexipatch) for more info.
+Not a whole lot of information is going to be on here, so go to the [main repo](https://github.com/Zaedus/arc-dotfiles) for more info.
 
 ## Patches
 
