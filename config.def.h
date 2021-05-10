@@ -1,11 +1,13 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+
 /* appearance */
 #if ROUNDED_CORNERS_PATCH
 static const unsigned int borderpx       = 0;   /* border pixel of windows */
 static const int corner_radius           = 10;
 #else
-static const unsigned int borderpx       = 1;   /* border pixel of windows */
+static const unsigned int borderpx       = 2;   /* border pixel of windows */
 #endif // ROUNDED_CORNERS_PATCH
 static const unsigned int snap           = 32;  /* snap pixel */
 #if SWALLOW_PATCH
@@ -17,11 +19,12 @@ static int nomodbuttons                  = 1;   /* allow client mouse button bin
 #if VANITYGAPS_PATCH
 static const unsigned int gappih         = 20;  /* horiz inner gap between windows */
 static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
-static const unsigned int gappoh         = 10;  /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 30;  /* vert outer gap between windows and screen edge */
+static const unsigned int gappoh         = 20;  /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 20;  /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 #endif // VANITYGAPS_PATCH
 #if AUTOSTART_PATCH
+// All of this is useless because I manually set the path
 static const char autostartblocksh[]     = "autostart_blocking.sh";
 static const char autostartsh[]          = "autostart.sh";
 static const char dwmdir[]               = "dwm";
@@ -47,7 +50,7 @@ static const int showtab                 = showtab_auto;        /* Default tab b
 static const int toptab                  = False;               /* False means bottom tab bar */
 #endif // TAB_PATCH
 #if BAR_HEIGHT_PATCH
-static const int bar_height              = 0;   /* 0 means derive from font, >= 1 explicit height */
+static const int bar_height              = 25;   /* 0 means derive from font, >= 1 explicit height */
 #endif // BAR_HEIGHT_PATCH
 #if BAR_PADDING_PATCH
 static const int vertpad                 = 10;  /* vertical padding of bar */
@@ -103,50 +106,63 @@ static void (*bartabmonfns[])(Monitor *) = { NULL /* , customlayoutfn */ };
 #if BAR_PANGO_PATCH
 static const char font[]                 = "monospace 10";
 #else
-static const char *fonts[]               = { "monospace:size=10" };
+static const char *fonts[]               = 
+	{
+		"Cousine Nerd Font:size=10:antialias=true:autohint=true",
+		"JoyPixels:size=10:antialias=true:autohint=true",
+	};
 #endif // BAR_PANGO_PATCH
 static const char dmenufont[]            = "monospace:size=10";
 
 #if BAR_FLEXWINTITLE_PATCH
 static char c000000[]                    = "#000000"; // placeholder value
 #endif // BAR_FLEXWINTITLE_PATCH
-static char normfgcolor[]                = "#bbbbbb";
-static char normbgcolor[]                = "#222222";
-static char normbordercolor[]            = "#444444";
+
+#define ACCENT "#3b84de"
+//#define GRAY1  "#383c4a"
+#define GRAY1  "#2c2f3a"
+#define GRAY2  "#404552"
+#define GRAY3  "#4b5162"
+#define GRAY4  "#7c818c"
+#define TEXT   "#D3DAE3"
+
+static char normfgcolor[]                = GRAY4;
+static char normbgcolor[]                = GRAY1;
+static char normbordercolor[]            = GRAY2;
 static char normfloatcolor[]             = "#db8fd9";
 
-static char selfgcolor[]                 = "#eeeeee";
-static char selbgcolor[]                 = "#005577";
-static char selbordercolor[]             = "#005577";
-static char selfloatcolor[]              = "#005577";
+static char selfgcolor[]                 = TEXT;
+static char selbgcolor[]                 = ACCENT;
+static char selbordercolor[]             = ACCENT;
+static char selfloatcolor[]              = ACCENT;
 
-static char titlenormfgcolor[]           = "#bbbbbb";
-static char titlenormbgcolor[]           = "#222222";
-static char titlenormbordercolor[]       = "#444444";
+static char titlenormfgcolor[]           = GRAY4;
+static char titlenormbgcolor[]           = GRAY1;
+static char titlenormbordercolor[]       = GRAY2;
 static char titlenormfloatcolor[]        = "#db8fd9";
 
-static char titleselfgcolor[]            = "#eeeeee";
-static char titleselbgcolor[]            = "#005577";
-static char titleselbordercolor[]        = "#005577";
-static char titleselfloatcolor[]         = "#005577";
+static char titleselfgcolor[]            = TEXT;
+static char titleselbgcolor[]            = ACCENT;
+static char titleselbordercolor[]        = ACCENT;
+static char titleselfloatcolor[]         = ACCENT;
 
-static char tagsnormfgcolor[]            = "#bbbbbb";
-static char tagsnormbgcolor[]            = "#222222";
-static char tagsnormbordercolor[]        = "#444444";
+static char tagsnormfgcolor[]            = GRAY4;
+static char tagsnormbgcolor[]            = GRAY1;
+static char tagsnormbordercolor[]        = GRAY2;
 static char tagsnormfloatcolor[]         = "#db8fd9";
 
-static char tagsselfgcolor[]             = "#eeeeee";
-static char tagsselbgcolor[]             = "#005577";
-static char tagsselbordercolor[]         = "#005577";
-static char tagsselfloatcolor[]          = "#005577";
+static char tagsselfgcolor[]             = TEXT;
+static char tagsselbgcolor[]             = ACCENT;
+static char tagsselbordercolor[]         = ACCENT;
+static char tagsselfloatcolor[]          = ACCENT;
 
-static char hidfgcolor[]                 = "#005577";
-static char hidbgcolor[]                 = "#222222";
-static char hidbordercolor[]             = "#005577";
+static char hidfgcolor[]                 = ACCENT;
+static char hidbgcolor[]                 = GRAY1;
+static char hidbordercolor[]             = ACCENT;
 static char hidfloatcolor[]              = "#f76e0c";
 
-static char urgfgcolor[]                 = "#bbbbbb";
-static char urgbgcolor[]                 = "#222222";
+static char urgfgcolor[]                 = GRAY4;
+static char urgbgcolor[]                 = GRAY1;
 static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#db8fd9";
 
@@ -360,7 +376,7 @@ static Sp scratchpads[] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][NUMTAGS] = {
-	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	[DEFAULT_TAGS]        = { "", "", "", "ﴬ", "", "", "", "", "" },
 	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
@@ -672,7 +688,7 @@ static const char *xkb_layouts[]  = {
 #endif // XKB_PATCH
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #if COMBO_PATCH && SWAPTAGS_PATCH && TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      comboview,      {.ui = 1 << TAG} }, \
@@ -762,7 +778,7 @@ static const char *dmenucmd[] = {
 	#if !NODMENU_PATCH
 	"-m", dmenumon,
 	#endif // NODMENU_PATCH
-	"-fn", dmenufont,
+	//"-fn", dmenufont,
 	"-nb", normbgcolor,
 	"-nf", normfgcolor,
 	"-sb", selbgcolor,
@@ -772,7 +788,7 @@ static const char *dmenucmd[] = {
 	#endif // BAR_DMENUMATCHTOP_PATCH
 	NULL
 };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
@@ -798,13 +814,26 @@ static Key on_empty_keys[] = {
 };
 #endif // ON_EMPTY_KEYS_PATCH
 
+static const char *brightnessup[] = { "lux", "-a" "5%", NULL };
+static const char *brightnessdown[] = { "lux", "-s", "5%", NULL };
+
 static Key keys[] = {
 	/* modifier                     key            function                argument */
+	
+	{ 0,                    XF86XK_AudioLowerVolume,   spawn, SHCMD("amixer sset Master 5%- && kill -49 $(pidof dwmblocks)") },
+  	{ 0,                    XF86XK_AudioMute,          spawn, SHCMD("amixer -D pulse set Master 1+ toggle && kill -49 $(pidof dwmblocks)")},
+  	{ 0,                    XF86XK_AudioRaiseVolume,   spawn, SHCMD("amixer sset Master 5%+ && kill -49 $(pidof dwmblocks)") },
+	{ 0,                    XF86XK_AudioMicMute,       spawn, SHCMD("amixer set Capture toggle | gawk 'match($0, /Front Left.*\\[(.*)\\]/, a) {print a[1]}' | xargs notify-send --hint=int:transient:1 -i \"audio-input-microphone\" \"Mic switched: $1\"") },
+  	{ 0,                    XF86XK_MonBrightnessUp,    spawn, {.v = brightnessup} },
+  	{ 0,                    XF86XK_MonBrightnessDown,  spawn, {.v = brightnessdown} },
+  	{ MODKEY,               XF86XK_AudioRaiseVolume,   spawn, SHCMD("playerctl next")},
+	{ MODKEY,               XF86XK_AudioLowerVolume,   spawn, SHCMD("playerctl previous") },
+	{ MODKEY,               XF86XK_AudioMute,          spawn, SHCMD("playerctl play-pause") },
 	#if KEYMODES_PATCH
 	{ MODKEY,                       XK_Escape,     setkeymode,             {.ui = COMMANDMODE} },
 	#endif // KEYMODES_PATCH
-	{ MODKEY,                       XK_p,          spawn,                  {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return,     spawn,                  {.v = termcmd } },
+	{ MODKEY,                       XK_space,      spawn,                  {.v = dmenucmd } },
+	{ MODKEY,                       XK_Return,     spawn,                  {.v = termcmd } },
 	#if RIODRAW_PATCH
 	{ MODKEY|ControlMask,           XK_p,          riospawnsync,           {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return,     riospawn,               {.v = termcmd } },
@@ -896,7 +925,7 @@ static Key keys[] = {
 	#if INSETS_PATCH
 	{ MODKEY|ShiftMask|ControlMask, XK_a,          updateinset,            {.v = &default_inset } },
 	#endif // INSETS_PATCH
-	{ MODKEY,                       XK_Return,     zoom,                   {0} },
+	//{ MODKEY,                       XK_backslash,     zoom,                   {0} },
 	#if VANITYGAPS_PATCH
 	{ MODKEY|Mod4Mask,              XK_u,          incrgaps,               {.i = +1 } },
 	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,          incrgaps,               {.i = -1 } },
@@ -927,7 +956,7 @@ static Key keys[] = {
 	#if BAR_WINTITLEACTIONS_PATCH
 	{ MODKEY|ControlMask,           XK_z,          showhideclient,         {0} },
 	#endif // BAR_WINTITLEACTIONS_PATCH
-	{ MODKEY|ShiftMask,             XK_c,          killclient,             {0} },
+	{ MODKEY,             XK_q,          killclient,             {0} },
 	#if KILLUNSEL_PATCH
 	{ MODKEY|ShiftMask,             XK_x,          killunsel,              {0} },
 	#endif // KILLUNSEL_PATCH
@@ -952,7 +981,7 @@ static Key keys[] = {
 	#endif // XRDB_PATCH
 	{ MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,              {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },
+	//{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },
 	#if COLUMNS_LAYOUT
 	{ MODKEY,                       XK_c,          setlayout,              {.v = &layouts[3]} },
 	#endif // COLUMNS_LAYOUT
@@ -967,7 +996,7 @@ static Key keys[] = {
 	{ MODKEY|Mod5Mask|Mod1Mask,     XK_Tab,        rotatelayoutaxis,       {.i = -4 } },   /* flextile, 4 = secondary stack axis */
 	{ MODKEY|ControlMask,           XK_Return,     mirrorlayout,           {0} },          /* flextile, flip master and stack areas */
 	#endif // FLEXTILE_DELUXE_LAYOUT
-	{ MODKEY,                       XK_space,      setlayout,              {0} },
+	//{ MODKEY,                       XK_space,      setlayout,              {0} },
 	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
 	#if MAXIMIZE_PATCH
 	{ MODKEY|ControlMask|ShiftMask, XK_h,          togglehorizontalmax,    {0} },
@@ -989,7 +1018,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_t,          unfloatvisible,         {.v = &layouts[0]} },
 	#endif // UNFLOATVISIBLE_PATCH
 	#if TOGGLEFULLSCREEN_PATCH
-	{ MODKEY,                       XK_y,          togglefullscreen,       {0} },
+	{ MODKEY,                       XK_m,          togglefullscreen,       {0} },
 	#endif // TOGGLEFULLSCREEN_PATCH
 	#if !FAKEFULLSCREEN_PATCH && FAKEFULLSCREEN_CLIENT_PATCH
 	{ MODKEY|ShiftMask,             XK_y,          togglefakefullscreen,   {0} },
@@ -1159,6 +1188,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F2,         mpdchange,              {.i = +1} },
 	{ MODKEY,                       XK_Escape,     mpdcontrol,             {0} },
 	#endif // MPDCONTROL_PATCH
+	/* Utility Keys (volume, brightness, microphone, currently playing media) */
+	
 	TAGKEYS(                        XK_1,                                  0)
 	TAGKEYS(                        XK_2,                                  1)
 	TAGKEYS(                        XK_3,                                  2)
@@ -1168,6 +1199,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                                  6)
 	TAGKEYS(                        XK_8,                                  7)
 	TAGKEYS(                        XK_9,                                  8)
+	
 };
 
 #if KEYMODES_PATCH

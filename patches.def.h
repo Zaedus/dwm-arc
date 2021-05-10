@@ -19,7 +19,7 @@
  * Awesomebar takes precedence over fancybar.
  * https://dwm.suckless.org/patches/awesomebar/
  */
-#define BAR_AWESOMEBAR_PATCH 0
+#define BAR_AWESOMEBAR_PATCH 1
 
 /* This patch depends on statuscmd patch and adds integration with a (patched)
  * dwmblocks instance to give a clickable status bar. One must not necessarily
@@ -29,7 +29,7 @@
  * dwmblocks: https://github.com/torrinfail/dwmblocks
  * https://dwm.suckless.org/patches/statuscmd/
  */
-#define BAR_DWMBLOCKS_PATCH 0
+#define BAR_DWMBLOCKS_PATCH 1
 
 /* Originally the dwmblocks + statuscmd patch used a user defined signal (SIGUSR1)
  * for communicating with dwmblocks to indicate update signal and what button was
@@ -294,7 +294,7 @@
 /* Allows the bar height to be explicitly set rather than being derived from font.
  * https://dwm.suckless.org/patches/bar_height/
  */
-#define BAR_HEIGHT_PATCH 0
+#define BAR_HEIGHT_PATCH 1
 
 /* This patch prevents dwm from drawing tags with no clients (i.e. vacant) on the bar.
  * https://dwm.suckless.org/patches/hide_vacant_tags/
@@ -317,7 +317,7 @@
 /* This patch adds vertical and horizontal space between the statusbar and the edge of the screen.
  * https://dwm.suckless.org/patches/barpadding/
  */
-#define BAR_PADDING_PATCH 0
+#define BAR_PADDING_PATCH 1
 
 /* This patch adds simple markup for status messages using pango markup.
  * This depends on the pango library v1.44 or greater.
@@ -388,7 +388,7 @@
  * This patch takes precedence over ATTACHBELOW_PATCH.
  * https://dwm.suckless.org/patches/attachaside/
  */
-#define ATTACHASIDE_PATCH 0
+#define ATTACHASIDE_PATCH 1
 
 /* This patch adds new clients below the selected client.
  * This patch takes precedence over ATTACHBOTTOM_PATCH.
@@ -407,7 +407,7 @@
  * than the original ~/.dwm folder.
  * https://dwm.suckless.org/patches/autostart/
  */
-#define AUTOSTART_PATCH 0
+#define AUTOSTART_PATCH 1
 
 /* By default, windows that are not visible when requesting a resize/move will not
  * get resized/moved. With this patch, they will.
@@ -419,7 +419,7 @@
  * This patch takes precedence over centeredwindowname and fancybar patches.
  * https://dwm.suckless.org/patches/center/
  */
-#define CENTER_PATCH 0
+#define CENTER_PATCH 1
 
 /* A transient window is one that is meant to be short lived and is usually raised by a
  * parent window. Such windows are typically dialog boxes and the like.
@@ -431,7 +431,7 @@
  * adding wintype as a client rule filter, hence this no longer works out of the box. This
  * patch restores previous behaviour with the center patch.
  */
-#define CENTER_TRANSIENT_WINDOWS_PATCH 0
+#define CENTER_TRANSIENT_WINDOWS_PATCH 1
 
 /* As above, except that the transient window is centered within the position of the parent
  * window, rather than at the center of the screen. This takes precedence over the above patch.
@@ -590,7 +590,7 @@
  * again it shows the bar and restores the layout that was active before going fullscreen.
  * https://dwm.suckless.org/patches/fullscreen/
  */
-#define FULLSCREEN_PATCH 0
+#define FULLSCREEN_PATCH 1
 
 /* This patch provides a keybinding to rotate all clients in the currently selected
  * area (master or stack) without affecting the other area.
@@ -1069,7 +1069,7 @@
 /* This patch allows you to toggle fullscreen on and off using a single shortcut key.
  * https://github.com/bakkeby/patches/blob/master/dwm/dwm-togglefullscreen-6.2.diff
  */
-#define TOGGLEFULLSCREEN_PATCH 0
+#define TOGGLEFULLSCREEN_PATCH 1
 
 /* Lets you transfer the currently focused client between the master and stack area
  * while increasing or decreasing the master area (nmaster) accordingly.
@@ -1094,7 +1094,7 @@
  * https://github.com/bakkeby/patches/blob/master/dwm/dwm-vanitygaps-6.2.diff
  * https://github.com/bakkeby/patches/blob/master/dwm/dwm-cfacts-vanitygaps-6.2.diff
  */
-#define VANITYGAPS_PATCH 0
+#define VANITYGAPS_PATCH 1
 
 /* This patch adds outer gaps for the monocle layout.
  * Most gaps patches tries to avoid gaps on the monocle layout, as it is often used as a
@@ -1203,7 +1203,7 @@
 /* Fibonacci spiral layout.
  * https://dwm.suckless.org/patches/fibonacci/
  */
-#define FIBONACCI_SPIRAL_LAYOUT 0
+#define FIBONACCI_SPIRAL_LAYOUT 1
 
 /* Flextile deluxe layout.
  * A revamped, more flexible, and over-the-top version of the original flextile layout.
