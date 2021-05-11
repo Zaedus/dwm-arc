@@ -4,3 +4,4 @@ dwm-msg
 config.h
 patches.h
 install.sh
+.vscode
