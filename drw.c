@@ -302,6 +302,8 @@ drw_clr_create(
 	                       DefaultColormap(drw->dpy, drw->screen),
 	                       clrname, dest))
 		die("error, cannot allocate color '%s'", clrname);
+		dest->pixel |= 0xff << 24;
+		
 
 	#if NO_TRANSPARENT_BORDERS_PATCH
 	dest->pixel |= 0xff << 24;
