@@ -50,7 +50,7 @@ static const int showtab                 = showtab_auto;        /* Default tab b
 static const int toptab                  = False;               /* False means bottom tab bar */
 #endif // TAB_PATCH
 #if BAR_HEIGHT_PATCH
-static const int bar_height              = 25;   /* 0 means derive from font, >= 1 explicit height */
+static const int bar_height              = 27;   /* 0 means derive from font, >= 1 explicit height */
 #endif // BAR_HEIGHT_PATCH
 #if BAR_PADDING_PATCH
 static const int vertpad                 = 10;  /* vertical padding of bar */
@@ -424,6 +424,7 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
+	RULE(.title = "System Package Update", .isfloating = 1, .iscentered = 1)
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Firefox", .tags = 1 << 7)
 	#if SCRATCHPADS_PATCH
@@ -789,6 +790,8 @@ static const char *dmenucmd[] = {
 	NULL
 };
 static const char *termcmd[]  = { "alacritty", NULL };
+static const char *updtcmd[]  = { "alacritty", "-t", "System Package Update", "--class", "floating", "-e", "/usr/bin/fish", "-c", "clear && yay -Syu && echo 'Press enter to exit...' && read -p ''" };
+
 
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
@@ -829,6 +832,9 @@ static Key keys[] = {
   	{ MODKEY,               XF86XK_AudioRaiseVolume,   spawn, SHCMD("playerctl next")},
 	{ MODKEY,               XF86XK_AudioLowerVolume,   spawn, SHCMD("playerctl previous") },
 	{ MODKEY,               XF86XK_AudioMute,          spawn, SHCMD("playerctl play-pause") },
+	{ MODKEY,               XK_s,                      spawn, SHCMD("slip -nu") },
+	{ MODKEY,               XK_p,                      spawn, SHCMD("~/.dwm/scripts/togglepicom") },
+
 	#if KEYMODES_PATCH
 	{ MODKEY,                       XK_Escape,     setkeymode,             {.ui = COMMANDMODE} },
 	#endif // KEYMODES_PATCH
@@ -1259,7 +1265,7 @@ static Button buttons[] = {
 	{ ClkStatusText,        0,                   Button2,        spawn,          {.v = statuscmd } },
 	{ ClkStatusText,        0,                   Button3,        spawn,          {.v = statuscmd } },
 	#else
-	{ ClkStatusText,        0,                   Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,                   Button2,        spawn,          {.v = updtcmd } },
 	#endif // BAR_STATUSCMD_PATCH
 	#if PLACEMOUSE_PATCH
 	/* placemouse options, choose which feels more natural:
