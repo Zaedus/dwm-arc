@@ -108,8 +108,8 @@ static const char font[]                 = "monospace 10";
 #else
 static const char *fonts[]               = 
 	{
-		"Cousine Nerd Font:size=10:antialias=true:autohint=true",
-		"JoyPixels:size=10:antialias=true:autohint=true",
+		"Source Code Pro:size=10:antialias=true:autohint=true",
+		"Font Awesome 5 Free:size=10:antialias=true:autohint=true",
 	};
 #endif // BAR_PANGO_PATCH
 static const char dmenufont[]            = "monospace:size=10";
